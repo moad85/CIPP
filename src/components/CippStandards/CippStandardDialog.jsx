@@ -102,6 +102,9 @@ const StandardCard = memo(
             height: "100%",
             display: "flex",
             flexDirection: "column",
+            ...(isNewStandard(standard.addedDate) && {
+              mt: 1.2, // Add top margin to accommodate the "New" label
+            }),
           }}
         >
           {isNewStandard(standard.addedDate) && (
@@ -120,22 +123,6 @@ const StandardCard = memo(
               }}
             />
           )}
-          {standard.deprecated && (
-            <Chip
-              label="Deprecated"
-              size="small"
-              color="error"
-              sx={{
-                position: "absolute",
-                top: -10,
-                right: 12,
-                zIndex: 1,
-                fontSize: "0.7rem",
-                height: 20,
-                fontWeight: "bold",
-              }}
-            />
-          )}
           <Card
             id={`standard-card-${standard.name}`}
             sx={{
@@ -144,16 +131,10 @@ const StandardCard = memo(
               height: "100%",
               flex: 1,
               position: "relative",
-              ...(standard.deprecated && {
+              ...(isNewStandard(standard.addedDate) && {
                 border: "2px solid",
-                borderColor: "error.main",
-                opacity: 0.7,
+                borderColor: "success.main",
               }),
-              ...(isNewStandard(standard.addedDate) &&
-                !standard.deprecated && {
-                  border: "2px solid",
-                  borderColor: "success.main",
-                }),
             }}
           >
             <CardContent sx={{ flexGrow: 1, pt: 3, pb: 1 }}>
@@ -262,34 +243,7 @@ const StandardCard = memo(
             </CardContent>
 
             <CardContent sx={{ pt: 1, pb: 2 }}>
-              {standard.deprecated ? (
-                <Box>
-                  <FormControlLabel
-                    control={
-                      <Switch
-                        checked={isSelected}
-                        onChange={handleToggle}
-                        color="primary"
-                        edge="start"
-                        size="medium"
-                        disableRipple
-                        disabled={!isSelected}
-                      />
-                    }
-                    label={
-                      isSelected
-                        ? "Remove this standard from the template"
-                        : "This standard is deprecated"
-                    }
-                  />
-                  {!isSelected && (
-                    <Typography variant="body2" color="error" sx={{ mt: 1 }}>
-                      This standard is deprecated and cannot be added. Please use an alternative
-                      standard if available.
-                    </Typography>
-                  )}
-                </Box>
-              ) : standard.multiple ? (
+              {standard.multiple ? (
                 <IconButton
                   color="primary"
                   disabled={isButtonDisabled}
@@ -309,7 +263,6 @@ const StandardCard = memo(
                       size="medium"
                       // Disable animation for better performance
                       disableRipple
-                      disabled={isButtonDisabled}
                     />
                   }
                   label="Add this standard to the template"
@@ -376,7 +329,7 @@ const VirtualizedStandardGrid = memo(({ items, renderItem }) => {
       overscan={5}
       defaultItemHeight={320} // Provide estimated row height for better virtualization
       itemContent={(index) => (
-        <Box sx={{ pt: index === 0 ? 1.2 : 2, pb: index === rows.length - 1 ? 3 : 0 }}>
+        <Box sx={{ pt: index === 0 ? 0 : 2, pb: index === rows.length - 1 ? 3 : 0 }}>
           <Grid
             container
             spacing={2}
@@ -428,16 +381,10 @@ const CompactStandardList = memo(
                 "&:hover": {
                   bgcolor: "action.hover",
                 },
-                ...(standard.deprecated && {
-                  borderColor: "error.main",
+                ...(isNewStandard(standard.addedDate) && {
+                  borderColor: "success.main",
                   borderWidth: "2px",
-                  opacity: 0.7,
                 }),
-                ...(isNewStandard(standard.addedDate) &&
-                  !standard.deprecated && {
-                    borderColor: "success.main",
-                    borderWidth: "2px",
-                  }),
               }}
             >
               <ListItemText
@@ -446,14 +393,6 @@ const CompactStandardList = memo(
                     <Typography variant="subtitle1" sx={{ fontWeight: "medium" }}>
                       {standard.label}
                     </Typography>
-                    {standard.deprecated && (
-                      <Chip
-                        label="Deprecated"
-                        size="small"
-                        color="error"
-                        sx={{ fontSize: "0.7rem", height: 20, fontWeight: "bold" }}
-                      />
-                    )}
                     {isNewStandard(standard.addedDate) && (
                       <Chip
                         label="New"
@@ -566,30 +505,7 @@ const CompactStandardList = memo(
                 }
               />
               <ListItemSecondaryAction>
-                {standard.deprecated ? (
-                  isSelected ? (
-                    <FormControlLabel
-                      control={
-                        <Switch
-                          checked={isSelected}
-                          onChange={handleToggle}
-                          color="primary"
-                          size="small"
-                        />
-                      }
-                      label="Remove"
-                      sx={{ mr: 1 }}
-                    />
-                  ) : (
-                    <Typography
-                      variant="caption"
-                      color="error"
-                      sx={{ maxWidth: 200, textAlign: "right", mr: 1 }}
-                    >
-                      Deprecated - Cannot be added
-                    </Typography>
-                  )
-                ) : standard.multiple ? (
+                {standard.multiple ? (
                   <IconButton
                     color="primary"
                     disabled={isButtonDisabled}

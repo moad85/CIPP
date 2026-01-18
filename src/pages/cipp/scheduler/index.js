@@ -46,9 +46,7 @@ const Page = () => {
   ];
 
   const offCanvas = {
-    children: (extendedData) => (
-      <ScheduledTaskDetails data={extendedData} showActions={true} showTitle={false} />
-    ),
+    children: (extendedData) => <ScheduledTaskDetails data={extendedData} showActions={false} />,
     size: "xl",
     actions: actions,
   };

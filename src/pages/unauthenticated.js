@@ -22,7 +22,9 @@ const Page = () => {
   // Use useMemo to derive userRoles directly
   const userRoles = useMemo(() => {
     if (orgData.isSuccess && orgData.data?.clientPrincipal?.userRoles) {
-      return orgData.data.clientPrincipal.userRoles.filter((role) => !blockedRoles.includes(role));
+      return orgData.data.clientPrincipal.userRoles.filter(
+        (role) => !blockedRoles.includes(role)
+      );
     }
     return [];
   }, [orgData.isSuccess, orgData.data?.clientPrincipal?.userRoles]);
@@ -52,10 +54,7 @@ const Page = () => {
                   <CippImageCard
                     isFetching={false}
                     imageUrl="/assets/illustrations/undraw_online_test_re_kyfx.svg"
-                    text={
-                      orgData?.data?.message ||
-                      "You're not allowed to be here, or are logged in under the wrong account."
-                    }
+                    text="You're not allowed to be here, or are logged in under the wrong account."
                     title="Access Denied"
                     linkText={
                       swaStatus?.data?.clientPrincipal !== null && userRoles.length > 0

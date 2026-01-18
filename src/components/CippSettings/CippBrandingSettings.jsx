@@ -95,7 +95,7 @@ const CippBrandingSettings = () => {
   return (
     <CippButtonCard
       title="Branding Settings"
-      cardSx={{ display: "flex", flexDirection: "column", height: "100%" }}
+      cardSx={{ display: "flex", flexDirection: "column" }}
       CardButton={
         <Box sx={{ display: "flex", gap: 1 }}>
           <Button

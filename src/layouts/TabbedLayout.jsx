@@ -1,19 +1,13 @@
 import { usePathname, useRouter } from "next/navigation";
 import { Box, Divider, Stack, Tab, Tabs } from "@mui/material";
-import { useSearchParams } from "next/navigation";
 
 export const TabbedLayout = (props) => {
   const { tabOptions, children } = props;
   const router = useRouter();
   const pathname = usePathname();
-  const searchParams = useSearchParams();
 
   const handleTabsChange = (event, value) => {
-    // Preserve existing query parameters when changing tabs
-    const currentParams = new URLSearchParams(searchParams.toString());
-    const queryString = currentParams.toString();
-    const newPath = queryString ? `${value}?${queryString}` : value;
-    router.push(newPath);
+    router.push(value);
   };
 
   const currentTab = tabOptions.find((option) => option.path === pathname);

@@ -342,14 +342,13 @@ export const CippTenantSelector = (props) => {
           onChange={(nv) => setSelectedTenant(nv)}
           options={
             tenantList.isSuccess && tenantList.data && tenantList.data.length > 0
-              ? tenantList.data.map(({ customerId, displayName, defaultDomainName, initialDomainName }) => ({
+              ? tenantList.data.map(({ customerId, displayName, defaultDomainName }) => ({
                   value: defaultDomainName,
                   label: `${displayName} (${defaultDomainName})`,
-                  addedFields: {
-                    defaultDomainName: defaultDomainName,
-                    displayName: displayName,
-                    customerId: customerId,
-                    initialDomainName: initialDomainName,
+                  addedField: {
+                    defaultDomainName: "defaultDomainName",
+                    displayName: "displayName",
+                    customerId: "customerId",
                   },
                 }))
               : []

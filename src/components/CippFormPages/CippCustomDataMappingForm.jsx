@@ -42,7 +42,7 @@ const CippCustomDataMappingForm = ({ formControl }) => {
     multiple: false,
     placeholder: "Select a Source Type",
     options: [
-      { value: "reportingDb", label: "Reporting DB" },
+      { value: "extensionSync", label: "Extension Sync" },
       { value: "manualEntry", label: "Manual Entry" },
     ],
   };
@@ -65,7 +65,7 @@ const CippCustomDataMappingForm = ({ formControl }) => {
       condition: {
         field: "sourceType",
         compareType: "valueEq",
-        compareValue: "reportingDb",
+        compareValue: "extensionSync",
       },
     },
     {
@@ -219,7 +219,7 @@ const CippCustomDataMappingForm = ({ formControl }) => {
               </Stack>
             </Box>
 
-            {selectedSourceType?.value === "reportingDb" && (
+            {selectedSourceType?.value === "extensionSync" && (
               <>
                 <Box>
                   <Stack spacing={1}>
@@ -282,7 +282,7 @@ const CippCustomDataMappingForm = ({ formControl }) => {
       </Grid>
       <Grid size={{ xl: 4, xs: 12 }}>
         <Stack spacing={2}>
-          {selectedExtensionSyncDataset && selectedSourceType?.value === "reportingDb" && (
+          {selectedExtensionSyncDataset && selectedSourceType?.value === "extensionSync" && (
             <CippPropertyListCard
               title="Source"
               propertyItems={[

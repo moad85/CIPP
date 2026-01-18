@@ -6,8 +6,6 @@ import {
   TextField,
   IconButton,
   Tooltip,
-  Box,
-  Typography,
 } from "@mui/material";
 import { useEffect, useState, useMemo, useCallback, useRef } from "react";
 import { useSettings } from "../../hooks/use-settings";
@@ -191,12 +189,6 @@ export const CippAutoComplete = (props) => {
               typeof api?.valueField === "function"
                 ? api.valueField(option)
                 : option[api?.valueField],
-            description:
-              typeof api?.descriptionField === "function"
-                ? api.descriptionField(option)
-                : api?.descriptionField
-                ? option[api?.descriptionField]
-                : undefined,
             addedFields,
             rawData: option, // Store the full original object
           };
@@ -553,21 +545,6 @@ export const CippAutoComplete = (props) => {
         )}
         groupBy={groupBy}
         renderGroup={renderGroup}
-        renderOption={(props, option) => {
-          const { key, ...optionProps } = props;
-          return (
-            <Box component="li" key={key} {...optionProps}>
-              <Box>
-                <Typography variant="body1">{option.label}</Typography>
-                {option.description && (
-                  <Typography variant="caption" color="text.secondary" sx={{ display: "block" }}>
-                    {option.description}
-                  </Typography>
-                )}
-              </Box>
-            </Box>
-          );
-        }}
         {...other}
       />
       {api?.templateView && (

@@ -4,8 +4,6 @@ import { getCippTranslation } from "../../utils/get-cipp-translation";
 import { getCippFormatting } from "../../utils/get-cipp-formatting";
 import { useMediaQuery, Grid } from "@mui/system";
 import CloseIcon from "@mui/icons-material/Close";
-import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 
 export const CippOffCanvas = (props) => {
   const {
@@ -19,10 +17,6 @@ export const CippOffCanvas = (props) => {
     children,
     size = "sm",
     footer,
-    onNavigateUp,
-    onNavigateDown,
-    canNavigateUp = false,
-    canNavigateDown = false,
   } = props;
 
   const mdDown = useMediaQuery((theme) => theme.breakpoints.down("md"));
@@ -90,31 +84,9 @@ export const CippOffCanvas = (props) => {
           sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", p: 1.5 }}
         >
           <Typography variant="h5">{title}</Typography>
-          <Box sx={{ display: "flex", gap: 0.5 }}>
-            {(canNavigateUp || canNavigateDown) && (
-              <>
-                <IconButton
-                  onClick={onNavigateUp}
-                  disabled={!canNavigateUp}
-                  size="small"
-                  title="Previous row"
-                >
-                  <KeyboardArrowUpIcon />
-                </IconButton>
-                <IconButton
-                  onClick={onNavigateDown}
-                  disabled={!canNavigateDown}
-                  size="small"
-                  title="Next row"
-                >
-                  <KeyboardArrowDownIcon />
-                </IconButton>
-              </>
-            )}
-            <IconButton onClick={onClose}>
-              <CloseIcon />
-            </IconButton>
-          </Box>
+          <IconButton onClick={onClose}>
+            <CloseIcon />
+          </IconButton>
         </Box>
         <Divider />
         <Box
